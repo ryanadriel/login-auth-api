@@ -24,7 +24,7 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("login-auth-api")
                     .withSubject(user.getEmail())
-                    .withExpiresAt()
+                    .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception) {
@@ -32,7 +32,7 @@ public class TokenService {
         }
     }
 
-    public String valdiateToken(String token) {
+    public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
